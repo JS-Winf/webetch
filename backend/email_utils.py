@@ -1,0 +1,1 @@
+#Funktion zum Email-Versand (SMTP-Konfiguration evtl?!)
