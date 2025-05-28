@@ -3,7 +3,7 @@ from flask import Flask, render_template, request, redirect, url_for, session
 import os
 
 app = Flask(__name__)
-app.secret_key = os.random(24) # Sessions für zb. Login
+app.secret_key = os.urandom(24) # Sessions für zb. Login
 
 @app.route("/")
 def index():
@@ -25,4 +25,3 @@ def regiser():
 
 if __name__ == "__main__":
     app.run(debug=True)
-    
