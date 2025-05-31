@@ -5,9 +5,15 @@
 {% block content %}
     <h2>Registrieren</h2>
     <form method="POST">
-        <label>Name: <input type="text" name="name"></label><br>
-        <label>E-Mail: <input type="email" name="email"></label><br>
-        <label>Passwort: <input type="password" name="password"></label><br>
+        <label for="name">Name:</label><br>
+        <input type="text" name="name" id="name" required><br><br>
+
+        <label for="email">E-Mail:</label><br>
+        <input type="email" name="email" id="email" required><br><br>
+
+        <label for="password">Passwort:</label><br>
+        <input type="password" name="password" id="password" required><br><br>
+
         <button type="submit">Registrieren</button>
     </form>
 {% endblock %}

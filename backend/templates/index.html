@@ -3,6 +3,14 @@
 {% block title %}Startseite{% endblock %}
 
 {% block content %}
-    <h2>WIllkommen beim Eventverleih!</h2>
-    <p>Hier findest du unsere Auswahl an Geräten für dein Event.</p>
+    <h2>Herzlich Willkommen, das ist ein Platzhalter für coolen Stuff!</h2>
+
+    {% if user %}
+        <p>Du bist eingeloggt als <strong>{{ user }}</strong>.</p>
+        <p><a href="{{ url_for('logout') }}">Logout</a></p>
+    {% else %}
+        <p>Du bist nicht eingeloggt.</p>
+        <p><a href="{{ url_for('login') }}">Jetzt einloggen</a> oder 
+           <a href="{{ url_for('register') }}">registrieren</a>.</p>
+    {% endif %}
 {% endblock %}
