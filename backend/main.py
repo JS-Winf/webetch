@@ -11,7 +11,7 @@ def index():
     user = session.get("user")
     return render_template("index.html", user=user)
 
-@app.route("/login", methods=["GET", "POST"])
+@app.route("/login", methods=["GET", "POST"])                     #Login
 def login():
     if request.method == "POST":
         email = request.form.get("email")
@@ -26,7 +26,7 @@ def login():
         return redirect(url_for("index"))
     return render_template("login.html")
 
-@app.route("/register", methods=["GET", "POST"])
+@app.route("/register", methods=["GET", "POST"])                 #Registrierung
 def register():
     if request.method == "POST":
         name = request.form.get("name")
@@ -38,7 +38,7 @@ def register():
     return render_template("register.html")
 
 if __name__ == "__main__":
-    # Teste DB-Verbindung beim Start
+ #Teste DB-Verbindung beim Start
     try:
         conn = mariadb.connect(
             host="webtechnologien-dhsh.ch5e7fok1mgo.eu-central-1.rds.amazonaws.com",
@@ -54,7 +54,7 @@ if __name__ == "__main__":
         print(f" [Startup] DB-Verbindung erfolgreich: {result[0]}")
     except mariadb.Error as e:
         print(f" [Startup] Fehler bei der DB-Verbindung: {e}")
-        sys.exit(1)  # Bei Fehler App nicht starten
+        sys.exit(1)                                                 #Bei Fehler App nicht starten
 
     # Flask-App starten
     app.run(debug=True)
