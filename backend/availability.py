@@ -1,1 +1,0 @@
-#Logik zur Verfügbarkeit ( Kalenderprüfung )
