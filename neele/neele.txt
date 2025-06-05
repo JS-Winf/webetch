@@ -1,1 +1,0 @@
-#na, hau hier einfach mal rein was du hast oder gib mir infos. dann schaue ich mir das an wie ich das in python flask entgegennehme. oder vllt hat Robin ja eine gute Idee oder Empfehlung

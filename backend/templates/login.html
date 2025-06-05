@@ -3,14 +3,18 @@
 {% block title %}Login{% endblock %}
 
 {% block content %}
-    <h2>Login</h2>
-    <form method="POST">
-        <label for="email">E-Mail:</label><br>
-        <input type="email" name="email" id="email" required><br><br>
-
-        <label for="password">Passwort:</label><br>
-        <input type="password" name="password" id="password" required><br><br>
-
-        <button type="submit">Einloggen</button>
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Login</h2>
+    <form method="POST" class="mx-auto" style="max-width: 400px;">
+        <div class="mb-3">
+            <label for="email" class="form-label">E-Mail-Adresse</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="mb-3">
+            <label for="password" class="form-label">Passwort</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Einloggen</button>
     </form>
+</div>
 {% endblock %}
