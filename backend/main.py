@@ -13,6 +13,10 @@ def index():
     user = session.get("user")
     return render_template("index.html", user=user)
 
+@app.route("/produkte")
+def produkte():
+    return render_template("device_detail.html")
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":

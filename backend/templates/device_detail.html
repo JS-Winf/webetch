@@ -1,20 +1,16 @@
+{% extends "base.html" %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Produktseite</title>
+{% block title %}Produktseite{% endblock %}
 
-    <link rel="stylesheet" href="bootstrap-5.3.6-dist/assets/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="styles.css">
+{% block content %}
+    <h2 class="mb-4">Produktdetails</h2>
 
-</head>
-<body>
-    
-
-
-    #muss am Ende stehen bleiben
-    <script src="bootstrap-5.3.6-dist/assets/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Produktname: [Name einfügen]</h5>
+            <p class="card-text">Beschreibung: [Produktbeschreibung hier einfügen]</p>
+            <p class="card-text">Preis: [Preis einfügen] €</p>
+            <!-- Beispiel: Weitere Daten wie Verfügbarkeit, Kategorie etc. -->
+        </div>
+    </div>
+{% endblock %}

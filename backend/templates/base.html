@@ -16,6 +16,7 @@
             <h1 class="h3 mb-0">NiToVeranstaltungsservice</h1>
             <nav>
                 <a href="{{ url_for('index') }}" class="btn btn-outline-light btn-sm">Start</a>
+                <a href="{{ url_for('produkte') }}" class="btn btn-outline-light btn-sm">Produkte</a>
                 {% if session.user %}
                     <a href="{{ url_for('logout') }}" class="btn btn-outline-light btn-sm">Logout</a>
                 {% else %}
