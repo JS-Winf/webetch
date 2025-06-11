@@ -3,19 +3,28 @@ import os
 import mariadb
 import sys
 from werkzeug.security import generate_password_hash, check_password_hash
-
+from models import db, Item  # models.py enthält db = SQLAlchemy() und die Klasse Item
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
+
+# SQLAlchemy konfigurieren
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://admin:Webtechnologien123_@webtechnologien-dhsh.ch5e7fok1mgo.eu-central-1.rds.amazonaws.com:3306/webtechnologien"
+app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+db.init_app(app)
+
 
 @app.route("/")
 def index():
     user = session.get("user")
     return render_template("index.html", user=user)
 
+
 @app.route("/produkte")
 def produkte():
-    return render_template("device_detail.html")
+    items = Item.query.filter_by(display_online=True).all()
+    return render_template("devices.html", items=items)
+
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
@@ -51,14 +60,12 @@ def login():
     return render_template("login.html")
 
 
-
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
         name = request.form.get("name")
         email = request.form.get("email")
         password = request.form.get("password")
-
         hashed_password = generate_password_hash(password)
 
         try:
@@ -84,6 +91,7 @@ def register():
 
     return render_template("register.html")
 
+
 @app.route("/logout")
 def logout():
     session.clear()
@@ -91,9 +99,7 @@ def logout():
     return redirect(url_for("index"))
 
 
-
 if __name__ == "__main__":
- #Teste DB-Verbindung beim Start
     try:
         conn = mariadb.connect(
             host="webtechnologien-dhsh.ch5e7fok1mgo.eu-central-1.rds.amazonaws.com",
@@ -106,10 +112,9 @@ if __name__ == "__main__":
         cur.execute("SELECT 'DB-Verbindung OK'")
         result = cur.fetchone()
         conn.close()
-        print(f" [Startup] DB-Verbindung erfolgreich: {result[0]}")
+        print(f"[Startup] DB-Verbindung erfolgreich: {result[0]}")
     except mariadb.Error as e:
-        print(f" [Startup] Fehler bei der DB-Verbindung: {e}")
-        sys.exit(1)                                                 #Bei Fehler App nicht starten
+        print(f"[Startup] Fehler bei der DB-Verbindung: {e}")
+        sys.exit(1)
 
-    # Flask-App starten
     app.run(debug=True)
