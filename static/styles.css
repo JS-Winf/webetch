@@ -1,6 +1,41 @@
+/* --- Globales Layout --- */
 body {
-    background-color: #f8f9fa;
     font-family: Arial, sans-serif;
+    background-color: #f8f9fa;
 }
 
+/* --- Navigation --- */
+header nav a {
+    margin-left: 0.5rem;
+}
 
+/* --- Produktkarten --- */
+.card {
+    height: 100%;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: box-shadow 0.3s;
+}
+.card:hover {
+    box-shadow: 0 0 10px rgba(0,0,0,0.15);
+}
+.card-img-top {
+    height: 160px;
+    object-fit: cover;
+}
+
+/* --- Produktübersicht (Devices) --- */
+.row.row-cols-md-6 > .col {
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Buttons --- */
+.btn {
+    margin-top: 0.5rem;
+}
+
+/* --- Flash-Messages --- */
+.alert {
+    font-size: 0.95rem;
+}

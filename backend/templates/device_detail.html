@@ -1,16 +1,40 @@
 {% extends "base.html" %}
 
-{% block title %}Produktseite{% endblock %}
+{% block title %}Produktdetails{% endblock %}
 
 {% block content %}
-    <h2 class="mb-4">Produktdetails</h2>
+<div class="container">
+    <h2 class="mb-4">{{ item.name }}</h2>
 
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Produktname: [Name einfügen]</h5>
-            <p class="card-text">Beschreibung: [Produktbeschreibung hier einfügen]</p>
-            <p class="card-text">Preis: [Preis einfügen] €</p>
-            <!-- Beispiel: Weitere Daten wie Verfügbarkeit, Kategorie etc. -->
+    <div class="row">
+        <div class="col-md-6">
+            {% if item.image_url %}
+                <img src="{{ item.image_url }}" class="img-fluid rounded" alt="{{ item.name }}">
+            {% else %}
+                <div class="bg-secondary text-white text-center py-5">Kein Bild vorhanden</div>
+            {% endif %}
+        </div>
+
+        <div class="col-md-6">
+            <p><strong>Kategorie:</strong> {{ item.category }}</p>
+            <p><strong>Beschreibung:</strong> {{ item.description }}</p>
+            <p><strong>Preis pro Tag:</strong> {{ item.price_per_day }} €</p>
+            <p><strong>Verfügbar:</strong> {{ item.quantity }} Stück</p>
+
+            <form action="{{ url_for('add_to_cart', item_id=item.id) }}" method="post" class="mt-4">
+                <div class="row mb-3">
+                    <div class="col">
+                        <label for="start_date" class="form-label">Von</label>
+                        <input type="date" id="start_date" name="start_date" class="form-control" required>
+                    </div>
+                    <div class="col">
+                        <label for="end_date" class="form-label">Bis</label>
+                        <input type="date" id="end_date" name="end_date" class="form-control" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary w-100">In den Warenkorb</button>
+            </form>
         </div>
     </div>
+</div>
 {% endblock %}
