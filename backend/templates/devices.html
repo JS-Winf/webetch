@@ -1,19 +1,32 @@
-<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-6 g-4">
+{% extends "base.html" %}
+
+{% block title %}Produkte{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Unsere Produkte</h2>
+
+<div class="row row-cols-1 row-cols-md-4 g-4">
     {% for item in items %}
         <div class="col">
-            <div class="card h-100">
+            <div class="card h-100 shadow-sm">
                 {% if item.image_url %}
                     <img src="{{ item.image_url }}" class="card-img-top" alt="{{ item.name }}">
+                {% else %}
+                    <img src="{{ url_for('static', filename='placeholder.jpg') }}" class="card-img-top" alt="Kein Bild vorhanden">
                 {% endif %}
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">{{ item.name }}</h5>
-                    <p class="card-text">{{ item.description }}</p>
+                    <p class="card-text">
+                        {{ item.description[:100] if item.description else 'Keine Beschreibung verfügbar' }}
+                        {% if item.description and item.description|length > 100 %}...{% endif %}
+                    </p>
                     <p class="card-text"><strong>{{ item.price_per_day }} €/Tag</strong></p>
                     <p class="card-text text-muted">Kategorie: {{ item.category }}</p>
                     <p class="card-text">Verfügbar: {{ item.quantity }}</p>
-                    <a href="{{ url_for('produkt_detail', item_id=item.id) }}" class="btn btn-primary mt-auto">Details</a>
+                    <a href="{{ url_for('produkt_detail', item_id=item.id) }}" class="btn btn-primary mt-auto">Details ansehen</a>
                 </div>
             </div>
         </div>
     {% endfor %}
 </div>
+{% endblock %}

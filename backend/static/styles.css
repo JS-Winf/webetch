@@ -39,3 +39,8 @@ header nav a {
 .alert {
     font-size: 0.95rem;
 }
+
+.card-img-top {
+    object-fit: cover;
+    height: 180px;
+}
