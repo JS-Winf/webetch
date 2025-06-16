@@ -4,6 +4,8 @@ import mariadb
 import sys
 from werkzeug.security import generate_password_hash, check_password_hash
 from models import db, Item
+from flask_mail import Mail, Message
+from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = os.urandom(24)
@@ -43,20 +45,23 @@ def add_to_cart(item_id):
     flash("✅ Produkt wurde dem Warenkorb hinzugefügt.")
     return redirect(url_for("warenkorb"))
 
+
 @app.route("/warenkorb")
 def warenkorb():
     cart = session.get("cart", [])
     items = []
-
     for entry in cart:
         item = Item.query.get(entry["item_id"])
         if item:
+            start_date_obj = datetime.strptime(entry["start_date"], "%Y-%m-%d")
+            end_date_obj = datetime.strptime(entry["end_date"], "%Y-%m-%d")
+            days = (end_date_obj - start_date_obj).days
             items.append({
                 "item": item,
-                "start_date": entry["start_date"],
-                "end_date": entry["end_date"]
+                "start_date": start_date_obj,
+                "end_date": end_date_obj,
+                "days": days
             })
-
     return render_template("warenkorb.html", items=items)
 
 @app.route("/login", methods=["GET", "POST"])
@@ -141,6 +146,59 @@ def checkout():
     flash("✅ Deine Anfrage wurde erfolgreich übermittelt!")
     session["cart"] = []  # Warenkorb leeren
     return redirect(url_for("index"))
+
+    
+# Mail-Konfiguration für GMX
+app.config['MAIL_SERVER'] = 'mail.gmx.net'
+app.config['MAIL_PORT'] = 587
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+app.config['MAIL_USERNAME'] = 'webtech1@gmx.de'       
+app.config['MAIL_PASSWORD'] = '2KIPBLCWVX3E4ABYBMP6'     
+app.config['MAIL_DEFAULT_SENDER'] = 'webtech1@gmx.de' 
+
+mail=Mail(app)
+
+@app.route("/anfrage-absenden", methods=["POST"])
+def anfrage_absenden():
+    cart = session.get("cart", [])
+    if not cart:
+        flash("❌ Dein Warenkorb ist leer.")
+        return redirect(url_for("warenkorb"))
+
+    items = []
+    for entry in cart:
+        item = Item.query.get(entry["item_id"])
+        if item:
+            try:
+                start = datetime.strptime(entry["start_date"], "%Y-%m-%d")
+                end = datetime.strptime(entry["end_date"], "%Y-%m-%d")
+            except ValueError:
+                continue
+
+            items.append({
+                "name": item.name,
+                "start_date": start.strftime('%d.%m.%Y'),
+                "end_date": end.strftime('%d.%m.%Y'),
+                "price": item.price_per_day
+            })
+
+    # Mail senden
+    try:
+        empfaenger = "deine.mail@adresse.de"  # Testweise deine eigene Mailadresse
+        inhalt = render_template("email_template.txt", items=items)
+        msg = Message("Neue Anfrage von der Website",
+                      sender=app.config["MAIL_USERNAME"],
+                      recipients=[empfaenger],
+                      body=inhalt)
+        mail.send(msg)
+        flash("✅ Deine Anfrage wurde erfolgreich versendet!")
+    except Exception as e:
+        flash(f"❌ Fehler beim Senden der E-Mail: {e}")
+
+    return redirect(url_for("index"))
+
+
 
 if __name__ == "__main__":
     try:

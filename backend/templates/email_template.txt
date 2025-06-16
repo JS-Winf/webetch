@@ -1,0 +1,11 @@
+Neue Anfrage über die Website NiToVeranstaltungsservice
+
+Folgende Produkte wurden angefragt:
+
+{% for item in items %}
+- {{ item.name }}
+  Zeitraum: {{ item.start_date }} bis {{ item.end_date }}
+  Preis pro Tag: {{ item.price }} €
+{% endfor %}
+
+Vielen Dank!
