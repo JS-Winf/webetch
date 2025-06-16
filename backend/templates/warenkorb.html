@@ -3,48 +3,38 @@
 {% block title %}Warenkorb{% endblock %}
 
 {% block content %}
-<div class="container">
-    <h2 class="mb-4">Dein Warenkorb</h2>
+<h2 class="mb-4">🛒 Dein Warenkorb</h2>
 
-    {% if cart and cart|length > 0 %}
-        <div class="table-responsive">
-            <table class="table table-striped align-middle">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Produkt</th>
-                        <th>Zeitraum</th>
-                        <th>Preis/Tag</th>
-                        <th>Tage</th>
-                        <th>Gesamt</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% set total = 0 %}
-                    {% for item in cart %}
-                        {% set days = (item.end_date - item.start_date).days %}
-                        {% set item_total = days * item.price_per_day %}
-                        {% set total = total + item_total %}
-                        <tr>
-                            <td>{{ item.name }}</td>
-                            <td>{{ item.start_date.strftime('%d.%m.%Y') }} – {{ item.end_date.strftime('%d.%m.%Y') }}</td>
-                            <td>{{ "%.2f"|format(item.price_per_day) }} €</td>
-                            <td>{{ days }}</td>
-                            <td><strong>{{ "%.2f"|format(item_total) }} €</strong></td>
-                        </tr>
-                    {% endfor %}
-                    <tr class="table-light">
-                        <td colspan="4" class="text-end"><strong>Gesamtsumme:</strong></td>
-                        <td><strong>{{ "%.2f"|format(total) }} €</strong></td>
-                    </tr>
-                </tbody>
-            </table>
+{% if items %}
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        {% for entry in items %}
+        <div class="col">
+            <div class="card h-100">
+                {% if entry.item.image_url %}
+                    <img src="{{ entry.item.image_url }}" class="card-img-top" alt="{{ entry.item.name }}">
+                {% endif %}
+                <div class="card-body">
+                    <h5 class="card-title">{{ entry.item.name }}</h5>
+                    <p class="card-text">{{ entry.item.description }}</p>
+                    <p class="card-text"><strong>{{ entry.item.price_per_day }} €/Tag</strong></p>
+                    <p class="card-text text-muted">Kategorie: {{ entry.item.category }}</p>
+                    <p class="card-text">Verfügbar: {{ entry.item.quantity }}</p>
+                    <p class="card-text">Zeitraum: <br>
+                        Von: <strong>{{ entry.start_date }}</strong><br>
+                        Bis: <strong>{{ entry.end_date }}</strong>
+                    </p>
+                </div>
+            </div>
         </div>
+        {% endfor %}
+    </div>
 
-        <form action="{{ url_for('anfrage_absenden') }}" method="post" class="mt-4 text-end">
-            <button type="submit" class="btn btn-success">Jetzt anfragen</button>
-        </form>
-    {% else %}
-        <div class="alert alert-info">Dein Warenkorb ist aktuell leer.</div>
-    {% endif %}
-</div>
+    <div class="mt-4 text-end">
+        <a href="{{ url_for('checkout') }}" class="btn btn-success">Jetzt anfragen</a>
+    </div>
+{% else %}
+    <div class="alert alert-warning" role="alert">
+        Dein Warenkorb ist aktuell leer.
+    </div>
+{% endif %}
 {% endblock %}

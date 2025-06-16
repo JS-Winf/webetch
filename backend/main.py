@@ -28,26 +28,26 @@ def produkt_detail(item_id):
     item = Item.query.get_or_404(item_id)
     return render_template("device_detail.html", item=item)
 
-@app.route("/add-to-cart/<int:item_id>", methods=["POST"])
+@app.route("/add_to_cart/<int:item_id>", methods=["POST"])
 def add_to_cart(item_id):
     start_date = request.form.get("start_date")
     end_date = request.form.get("end_date")
 
-    cart = session.get("cart", [])
-    cart.append({
-        "item_id": item_id,
-        "start_date": start_date,
-        "end_date": end_date
-    })
+    if "cart" not in session:
+        session["cart"] = []
+
+    cart = session["cart"]
+    cart.append({"item_id": item_id, "start_date": start_date, "end_date": end_date})
     session["cart"] = cart
 
-    flash("✅ Produkt wurde zum Warenkorb hinzugefügt.")
+    flash("✅ Produkt wurde dem Warenkorb hinzugefügt.")
     return redirect(url_for("warenkorb"))
 
 @app.route("/warenkorb")
 def warenkorb():
     cart = session.get("cart", [])
     items = []
+
     for entry in cart:
         item = Item.query.get(entry["item_id"])
         if item:
@@ -56,6 +56,7 @@ def warenkorb():
                 "start_date": entry["start_date"],
                 "end_date": entry["end_date"]
             })
+
     return render_template("warenkorb.html", items=items)
 
 @app.route("/login", methods=["GET", "POST"])
@@ -126,6 +127,19 @@ def register():
 def logout():
     session.clear()
     flash("✅ Du wurdest erfolgreich ausgeloggt.")
+    return redirect(url_for("index"))
+
+@app.route("/checkout")
+def checkout():
+    items = session.get("cart", [])
+    if not items:
+        flash("Dein Warenkorb ist leer.")
+        return redirect(url_for("produkte"))
+
+    # (Optional: hier später Anfrage-Mail oder DB-Speicherung ergänzen)
+
+    flash("✅ Deine Anfrage wurde erfolgreich übermittelt!")
+    session["cart"] = []  # Warenkorb leeren
     return redirect(url_for("index"))
 
 if __name__ == "__main__":
