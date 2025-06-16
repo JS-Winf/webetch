@@ -64,6 +64,7 @@ def warenkorb():
             })
     return render_template("warenkorb.html", items=items)
 
+
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
