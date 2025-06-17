@@ -3,31 +3,36 @@
 {% block title %}Startseite{% endblock %}
 
 {% block content %}
-<div class="body2">
-    <h2 class="mb-4">Nito-Veranstaltungsservice</h2>
-    <h5 class="fst-italic">"Technik, die begeistert – für jeden Anlass perfekt in Szene gesetzt!"</h5>
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-10 col-lg-8">
+            <div class="body2 text-center text-md-start">
+                <h2 class="mb-3">Nito-Veranstaltungsservice</h2>
+                <h5 class="fst-italic mb-4">"Technik, die begeistert – für jeden Anlass perfekt in Szene gesetzt!"</h5>
 
-    {% if user %}
-        <p>Du bist eingeloggt als <strong>{{ user }}</strong>.</p>
-        <p><a href="{{ url_for('logout') }}" class="btn btn-warning">Logout</a></p>
-    {% else %}
-        <p>Du bist nicht eingeloggt.</p>
-        <p>
-            <a href="{{ url_for('login') }}" class="btn btn-primary">Jetzt einloggen</a>
-            oder
-            <a href="{{ url_for('register') }}" class="btn btn-secondary">Registrieren</a>
-        </p>
-    {% endif %}
+                {% if user %}
+                    <p>Du bist eingeloggt als <strong>{{ user }}</strong>.</p>
+                    <p><a href="{{ url_for('logout') }}" class="btn btn-warning">Logout</a></p>
+                {% else %}
+                    <p>Du bist nicht eingeloggt.</p>
+                    <p class="d-flex flex-column flex-sm-row gap-2 justify-content-center justify-content-md-start">
+                        <a href="{{ url_for('login') }}" class="btn btn-primary">Jetzt einloggen</a>
+                        <a href="{{ url_for('register') }}" class="btn btn-secondary">Registrieren</a>
+                    </p>
+                {% endif %}
 
-    <p class="p-start mt-4">
-        Ob Geburtstag, Hochzeit, Firmenfeier oder private Fete – mit dem Nito-Veranstaltungsservice wird jedes Event zum unvergesslichen Erlebnis.
-        Was einst als kleines Hobby begann, ist heute ein professioneller Dienstleister für Veranstaltungstechnik im privaten und gewerblichen Bereich.
-    </p>
+                <p class="p-start mt-4">
+                    Ob Geburtstag, Hochzeit, Firmenfeier oder private Fete – mit dem Nito-Veranstaltungsservice wird jedes Event zum unvergesslichen Erlebnis.
+                    Was einst als kleines Hobby begann, ist heute ein professioneller Dienstleister für Veranstaltungstechnik im privaten und gewerblichen Bereich.
+                </p>
 
-    <p class="p-start mt-3">
-        Wir verleihen moderne Licht- und Tontechnik, bieten individuelle Beratung und sorgen dafür, dass Ihr Event nicht nur gut klingt,
-        sondern auch strahlend in Erinnerung bleibt. Vertrauen Sie auf Erfahrung, Leidenschaft und zuverlässigen Service –
-        von der ersten Idee bis zum letzten Song.
-    </p>
+                <p class="p-start mt-3">
+                    Wir verleihen moderne Licht- und Tontechnik, bieten individuelle Beratung und sorgen dafür, dass Ihr Event nicht nur gut klingt,
+                    sondern auch strahlend in Erinnerung bleibt. Vertrauen Sie auf Erfahrung, Leidenschaft und zuverlässigen Service –
+                    von der ersten Idee bis zum letzten Song.
+                </p>
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}

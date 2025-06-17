@@ -3,49 +3,50 @@
 {% block title %}Warenkorb{% endblock %}
 
 {% block content %}
-<h2 class="mb-4">Dein Warenkorb</h2>
+<div class="container my-5">
+    <h2 class="mb-4 text-center">Dein Warenkorb</h2>
 
-{% if items %}
-    <table class="table table-bordered align-middle text-center">
-        <thead class="table-dark">
-            <tr>
-                <th>Produkt</th>
-                <th>Zeitraum</th>
-                <th>Preis/Tag</th>
-                <th>Tage</th>
-                <th>Gesamt</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% set ns = namespace(total=0) %}
-            {% for eintrag in items %}
-                {% set tage = (eintrag.end_date - eintrag.start_date).days %}
-                {% set zeilen_gesamt = tage * eintrag.item.price_per_day %}
-                {% set ns.total = ns.total + zeilen_gesamt %}
-                <tr>
-                    <td>{{ eintrag.item.name }}</td>
-                    <td>{{ eintrag.start_date.strftime('%d.%m.%Y') }} – {{ eintrag.end_date.strftime('%d.%m.%Y') }}</td>
-                    <td>{{ "%.2f"|format(eintrag.item.price_per_day) }} €</td>
-                    <td>{{ tage }}</td>
-                    <td><strong>{{ "%.2f"|format(zeilen_gesamt) }} €</strong></td>
-                </tr>
-            {% endfor %}
-            <tr class="table-light">
-                <td colspan="4" class="text-end"><strong>Gesamtsumme:</strong></td>
-                <td><strong>{{ "%.2f"|format(ns.total) }} €</strong></td>
-            </tr>
-        </tbody>
-    </table>
-
-    <form action="{{ url_for('anfrage_absenden') }}" method="post">
-        <div class="text-end">
-            <button type="submit" class="btn btn-success">Jetzt anfragen</button>
+    {% if items %}
+        <div class="table-responsive">
+            <table class="table table-bordered align-middle text-center">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Produkt</th>
+                        <th>Zeitraum</th>
+                        <th>Preis/Tag</th>
+                        <th>Tage</th>
+                        <th>Gesamt</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% set ns = namespace(total=0) %}
+                    {% for eintrag in items %}
+                        {% set tage = (eintrag.end_date - eintrag.start_date).days %}
+                        {% set zeilen_gesamt = tage * eintrag.item.price_per_day %}
+                        {% set ns.total = ns.total + zeilen_gesamt %}
+                        <tr>
+                            <td>{{ eintrag.item.name }}</td>
+                            <td>{{ eintrag.start_date.strftime('%d.%m.%Y') }} – {{ eintrag.end_date.strftime('%d.%m.%Y') }}</td>
+                            <td>{{ "%.2f"|format(eintrag.item.price_per_day) }} €</td>
+                            <td>{{ tage }}</td>
+                            <td><strong>{{ "%.2f"|format(zeilen_gesamt) }} €</strong></td>
+                        </tr>
+                    {% endfor %}
+                    <tr class="table-light">
+                        <td colspan="4" class="text-end"><strong>Gesamtsumme:</strong></td>
+                        <td><strong>{{ "%.2f"|format(ns.total) }} €</strong></td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
-    </form>
 
-{% else %}
-    <div class="alert alert-warning" role="alert">
-        Dein Warenkorb ist leer.
-    </div>
-{% endif %}
+        <form action="{{ url_for('anfrage_absenden') }}" method="post" class="text-end mt-3">
+            <button type="submit" class="btn btn-success">Jetzt anfragen</button>
+        </form>
+    {% else %}
+        <div class="alert alert-warning text-center" role="alert">
+            Dein Warenkorb ist leer.
+        </div>
+    {% endif %}
+</div>
 {% endblock %}

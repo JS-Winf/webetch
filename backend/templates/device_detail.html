@@ -4,35 +4,37 @@
 
 {% block content %}
 <div class="container">
-    <h2 class="mb-4">{{ item.name }}</h2>
+    <h2 class="mb-4 text-center text-md-start">{{ item.name }}</h2>
 
-    <div class="row">
-        <div class="col-md-6">
+    <div class="row gy-4">
+        <div class="col-12 col-md-6">
             {% if item.image_url %}
-                <img src="{{ item.image_url }}" class="img-fluid rounded" alt="{{ item.name }}">
+                <img src="{{ item.image_url }}" class="img-fluid rounded w-100" alt="{{ item.name }}">
             {% else %}
-                <div class="bg-secondary text-white text-center py-5">Kein Bild vorhanden</div>
+                <div class="bg-secondary text-white text-center py-5 rounded">Kein Bild vorhanden</div>
             {% endif %}
         </div>
 
-        <div class="col-md-6">
-            <p><strong>Kategorie:</strong> {{ item.category }}</p>
-            <p><strong>Beschreibung:</strong> {{ item.description }}</p>
-            <p><strong>Preis pro Tag:</strong> {{ item.price_per_day }} €</p>
-            <p><strong>Verfügbar:</strong> {{ item.quantity }} Stück</p>
+        <div class="col-12 col-md-6">
+            <ul class="list-unstyled">
+                <li><strong>Kategorie:</strong> {{ item.category }}</li>
+                <li><strong>Beschreibung:</strong> {{ item.description }}</li>
+                <li><strong>Preis pro Tag:</strong> {{ item.price_per_day }} €</li>
+                <li><strong>Verfügbar:</strong> {{ item.quantity }} Stück</li>
+            </ul>
 
             <form action="{{ url_for('add_to_cart', item_id=item.id) }}" method="post" class="mt-4">
-                <div class="row mb-3">
-                    <div class="col">
+                <div class="row g-3">
+                    <div class="col-12 col-sm-6">
                         <label for="start_date" class="form-label">Von</label>
                         <input type="date" id="start_date" name="start_date" class="form-control" required>
                     </div>
-                    <div class="col">
+                    <div class="col-12 col-sm-6">
                         <label for="end_date" class="form-label">Bis</label>
                         <input type="date" id="end_date" name="end_date" class="form-control" required>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-primary w-100">In den Warenkorb</button>
+                <button type="submit" class="btn btn-primary mt-4 w-100">In den Warenkorb</button>
             </form>
         </div>
     </div>

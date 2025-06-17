@@ -12,21 +12,29 @@
 
 <body class="{% block body_class %}{% endblock %}">
 
-    <header class="bg-dark text-white p-3">
-        <div class="container d-flex justify-content-between align-items-center">
-            <img src="{{ url_for('static', filename='images/Logo.jpg') }}" class="header-logo" alt="Logo"/>
-            <h1 class="h3 mb-0">NiTo-Veranstaltungsservice</h1>
-            <nav>
-                <a href="{{ url_for('index') }}" class="btn btn-outline-light btn-sm">Start</a>
-                <a href="{{ url_for('produkte') }}" class="btn btn-outline-light btn-sm">Produkte</a>
-                <a href="{{ url_for('warenkorb') }}" class="btn btn-outline-light btn-sm">Warenkorb</a>
-                {% if session.user %}
-                    <a href="{{ url_for('logout') }}" class="btn btn-outline-light btn-sm">Logout</a>
-                {% else %}
-                    <a href="{{ url_for('login') }}" class="btn btn-outline-light btn-sm">Login</a>
-                    <a href="{{ url_for('register') }}" class="btn btn-outline-light btn-sm">Registrieren</a>
-                {% endif %}
-            </nav>
+    <header class="bg-dark text-white py-3">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-12 col-md-2 text-center text-md-start mb-2 mb-md-0">
+                    <img src="{{ url_for('static', filename='images/Logo.jpg') }}" class="header-logo img-fluid" alt="Logo">
+                </div>
+                <div class="col-12 col-md-6 text-center mb-2 mb-md-0">
+                    <h1 class="h4 mb-0">NiTo-Veranstaltungsservice</h1>
+                </div>
+                <div class="col-12 col-md-4 text-center text-md-end">
+                    <nav class="d-flex flex-wrap justify-content-center justify-content-md-end gap-2">
+                        <a href="{{ url_for('index') }}" class="btn btn-outline-light btn-sm">Start</a>
+                        <a href="{{ url_for('produkte') }}" class="btn btn-outline-light btn-sm">Produkte</a>
+                        <a href="{{ url_for('warenkorb') }}" class="btn btn-outline-light btn-sm">Warenkorb</a>
+                        {% if session.user %}
+                            <a href="{{ url_for('logout') }}" class="btn btn-outline-light btn-sm">Logout</a>
+                        {% else %}
+                            <a href="{{ url_for('login') }}" class="btn btn-outline-light btn-sm">Login</a>
+                            <a href="{{ url_for('register') }}" class="btn btn-outline-light btn-sm">Registrieren</a>
+                        {% endif %}
+                    </nav>
+                </div>
+            </div>
         </div>
     </header>
 
@@ -47,12 +55,12 @@
     <!-- Bootstrap JS -->
     <script src="{{ url_for('static', filename='bootstrap-5.3.6-dist/assets/js/bootstrap.bundle.min.js') }}"></script>
 
-    <footer>
-        <div class="footer-content">
-            <p>2025 - NiTo-Veranstaltungsservice |</p>
-            <div class="social-links">
-                <a href="https://www.facebook.com/NI.TO.Veranstaltungsservice/" target="_blank" rel="noopener noreferrer">Facebook</a> |
-                <a href="https://www.instagram.com/nito_veranstaltungsservice?igsh=djNkMHBpcW85bnVj" target="_blank" rel="noopener noreferrer">Instagram</a>
+    <footer class="bg-dark text-white py-4 mt-5">
+        <div class="container text-center">
+            <p class="mb-2">© 2025 NiTo-Veranstaltungsservice</p>
+            <div class="social-links d-flex justify-content-center gap-3">
+                <a href="https://www.facebook.com/NI.TO.Veranstaltungsservice/" target="_blank" rel="noopener noreferrer" class="text-white">Facebook</a>
+                <a href="https://www.instagram.com/nito_veranstaltungsservice?igsh=djNkMHBpcW85bnVj" target="_blank" rel="noopener noreferrer" class="text-white">Instagram</a>
             </div>
         </div>
     </footer>
