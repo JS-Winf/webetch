@@ -11,7 +11,7 @@
             {% if item.image_url %}
                 <img src="{{ item.image_url }}" class="img-fluid rounded w-100" alt="{{ item.name }}">
             {% else %}
-                <div class="bg-secondary text-white text-center py-5 rounded">Kein Bild vorhanden</div>
+                <img src="{{ url_for('static', filename='images/Image.jpeg') }}" class="img-fluid rounded w-100" alt="Beispielbild">
             {% endif %}
         </div>
 

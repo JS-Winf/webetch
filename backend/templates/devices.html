@@ -12,7 +12,7 @@
                 {% if item.image_url %}
                     <img src="{{ item.image_url }}" class="card-img-top" alt="{{ item.name }}">
                 {% else %}
-                    <img src="{{ url_for('static', filename='placeholder.jpg') }}" class="card-img-top" alt="Kein Bild vorhanden">
+                    <img src="{{ url_for('static', filename='images/Image.jpeg') }}" class="card-img-top" alt="Kein Bild vorhanden">
                 {% endif %}
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title">{{ item.name }}</h5>
