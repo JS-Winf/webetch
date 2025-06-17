@@ -1,9 +1,16 @@
 /* --- Globales Layout --- */
 
-body {
+html, body {
+    height: 100%;
+    margin: 0;
     font-family: Arial, sans-serif;
     background-color: #888888;
-    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
 }
 
 /* Hintergrundbild für Startseite */
@@ -22,8 +29,7 @@ body {
 .header-logo {
     width: 40px;
     height: 20px;
-    top: 10px;
-    left: 10px;
+    object-fit: contain;
 }
 
 header nav a {
@@ -43,24 +49,14 @@ header nav a {
     border-radius: 5px;
     transition: box-shadow 0.3s;
 }
+
 .card:hover {
     box-shadow: 0 0 10px rgba(0,0,0,0.15);
 }
+
 .card-img-top {
     object-fit: cover;
     height: 180px;
-}
-
-/* --- Produktübersicht (Devices) --- */
-.row.row-cols-md-6 > .col {
-    display: flex;
-    flex-direction: column;
-}
-@media (min-width: 768px) {
-    .row-cols-md-4 > .col {
-        flex: 0 0 auto;
-        width: 25%;
-    }
 }
 
 /* --- Buttons --- */
@@ -73,28 +69,27 @@ header nav a {
     font-size: 0.95rem;
 }
 
-/* --- Footer ---*/
+/* --- Footer --- */
 footer {
-    position: fixed;
-    background-color: black;
+    background-color: #000;
     color: white;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    text-align: right;
-    height: 50px;
-    padding-top: 20px;  
+    padding: 1rem 0;
+    text-align: center;
 }
 
 .footer-content {
     display: flex;
-    justify-content: space-between;
-    align-items: right;
-    max-width: 1200px;
-    margin: 0 auto;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
 }
 
 .social-links a {
-    margin: 0.5rem;
-    color: white;   
+    margin: 0 0.5rem;
+    color: white;
+    text-decoration: none;
+}
+
+.social-links a:hover {
+    text-decoration: underline;
 }
