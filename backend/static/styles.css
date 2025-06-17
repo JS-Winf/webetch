@@ -2,12 +2,24 @@
 body {
     font-family: Arial, sans-serif;
     background-color: #f8f9fa;
+    
+}
+
+.body-hintergrund {
+    background-image: url(startseite.jpeg);
 }
 
 /* --- Navigation --- */
 header nav a {
     margin-left: 0.5rem;
 }
+
+/* --- Text-Startseite ---*/
+.p-start {
+    text-align: justify;
+    line-height: 1.0cm; 
+}
+
 
 /* --- Produktkarten --- */
 .card {
