@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Eventverleih{% endblock %}</title>
-
+ 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-5.3.6-dist/assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
@@ -13,7 +13,7 @@
 
     <header class="bg-dark text-white p-3">
         <div class="container d-flex justify-content-between align-items-center">
-            <h1 class="h3 mb-0">NiToVeranstaltungsservice</h1>
+            <h1 class="h3 mb-0">NiTo-Veranstaltungsservice</h1>
             <nav>
                 <a href="{{ url_for('index') }}" class="btn btn-outline-light btn-sm">Start</a>
                 <a href="{{ url_for('produkte') }}" class="btn btn-outline-light btn-sm">Produkte</a>
@@ -44,5 +44,22 @@
 
     <!-- Bootstrap JS -->
     <script src="{{ url_for('static', filename='bootstrap-5.3.6-dist/assets/js/bootstrap.bundle.min.js') }}"></script>
+
+
+    <footer>
+        <div class="footer-content">   
+        <p>2025 - NiTo-Veranstaltungsservice  |</p>
+            <div class="social-links">
+                <a href="https://www.facebook.com/NI.TO.Veranstaltungsservice/" target="_blank" rel="noopener noreferrer">
+                Facebook
+                </a>
+                <a href="https://www.instagram.com/nito_veranstaltungsservice?igsh=djNkMHBpcW85bnVj" target="_blank" rel="noopener noreferrer">
+                instagram
+                </a>
+            </div>
+        </div>  
+       
+    </footer>
+
 </body>
 </html>

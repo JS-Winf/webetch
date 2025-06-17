@@ -44,3 +44,29 @@ header nav a {
     object-fit: cover;
     height: 180px;
 }
+
+/* --- Footer ---*/
+footer {
+ position: fixed;
+ background-color: black;
+ color: white;
+ bottom: 0;
+ left: 0;
+ width: 100%;
+ text-align: right;
+ height: 50px;
+ padding-top: 20px;  
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: right;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+.social-links a {
+    margin: 0.5rem;   
+}
