@@ -2,33 +2,27 @@
 
 {% block title %}Startseite{% endblock %}
 
-<body style="background-image: url(/webetch/backend/static/images/startseite.jpeg);">
-
 {% block content %}
 <div class="body2">
-<div class="text-center">
-    <h2 class="mb-4">Nito-Veranstaltungsservice</h2>
-    <h3>"Technik, die begeister - für jeden Anlass perfekt in Szene gesetzt!"</h3>
-    <p class="p-start" class="lead">Ob Geburtstag, Hochzeit, Firmenfeier oder private Fete - mit der Ausstattung des Nito-Veranstaltungsservice
-        wird jedes Event zum unvergesslichen Erlebnis. Was einst als kleines Hobby begann, ist heute ein professioneller Dienstleister
-        für Veranstaltungstechnik im privaten und gewerblichen Bereich.<br>
-    Wir verleihen moderne Licht- und Tontechnik, bieten individuelle Beratung und sorgen dafür, dass Ihr Event nicht nur gut klingt,
-    sondern auch strahlend in Erinnerung bleibt. Vertrauen Sie auf Erfahrung, Leidenschaft und zuverlässigen Service - von der ersten
-    Idee bis zum letzten Song.</p>
+    <h2 class="mb-4">Herzlich Willkommen beim Ni-To Veranstaltungsservice!</h2>
 
     {% if user %}
-        <div class="alert alert-success mt-4">
-            Du bist eingeloggt als <strong>{{ user }}</strong>.
-        </div>
-        <a href="{{ url_for('logout') }}" class="btn btn-danger">Logout</a>
+        <p>Du bist eingeloggt als <strong>{{ user }}</strong>.</p>
+        <p><a href="{{ url_for('logout') }}" class="btn btn-warning">Logout</a></p>
     {% else %}
-        <div class="alert alert-warning mt-4">
-            Du bist nicht eingeloggt.
-        </div>
-        <a href="{{ url_for('login') }}" class="btn btn-primary">Jetzt einloggen</a>
-        <a href="{{ url_for('register') }}" class="btn btn-secondary">Registrieren</a>
+        <p>Du bist nicht eingeloggt.</p>
+        <p>
+            <a href="{{ url_for('login') }}" class="btn btn-primary">Jetzt einloggen</a>
+            oder
+            <a href="{{ url_for('register') }}" class="btn btn-secondary">Registrieren</a>
+        </p>
     {% endif %}
-</div>
+
+    <p class="p-start mt-4">
+        Wir bieten hochwertige Techniklösungen für Veranstaltungen aller Art – von kleinen Events bis hin zu großen Bühnenproduktionen.
+        In unserem Produktbereich findest du eine Vielzahl an Mietgeräten. 
+        Wähle dein Wunschdatum und stelle eine Anfrage direkt über unseren Warenkorb. 
+        Wir freuen uns auf deine Anfrage!
+    </p>
 </div>
 {% endblock %}
-</body>

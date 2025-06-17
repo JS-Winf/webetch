@@ -1,19 +1,22 @@
 /* --- Globales Layout --- */
 
-.body1 {
-    background-image: url(images/startseite.jpeg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    margin: 0;
-} 
-
-
 body {
     font-family: Arial, sans-serif;
     background-color: #f8f9fa;
-    
+    margin: 0;
 }
 
+/* Hintergrundbild für Startseite */
+.body2 {
+    background-image: url('../static/images/startseite.jpeg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 3rem;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+}
 
 /* --- Navigation --- */
 .header-logo {
@@ -27,12 +30,11 @@ header nav a {
     margin-left: 0.5rem;
 }
 
-/* --- Text-Startseite ---*/
+/* --- Text-Startseite --- */
 .p-start {
     text-align: justify;
-    line-height: 1.0cm; 
+    line-height: 1.5;
 }
-
 
 /* --- Produktkarten --- */
 .card {
@@ -45,14 +47,20 @@ header nav a {
     box-shadow: 0 0 10px rgba(0,0,0,0.15);
 }
 .card-img-top {
-    height: 160px;
     object-fit: cover;
+    height: 180px;
 }
 
 /* --- Produktübersicht (Devices) --- */
 .row.row-cols-md-6 > .col {
     display: flex;
     flex-direction: column;
+}
+@media (min-width: 768px) {
+    .row-cols-md-4 > .col {
+        flex: 0 0 auto;
+        width: 25%;
+    }
 }
 
 /* --- Buttons --- */
@@ -65,22 +73,17 @@ header nav a {
     font-size: 0.95rem;
 }
 
-.card-img-top {
-    object-fit: cover;
-    height: 180px;
-}
-
 /* --- Footer ---*/
 footer {
- position: fixed;
- background-color: black;
- color: white;
- bottom: 0;
- left: 0;
- width: 100%;
- text-align: right;
- height: 50px;
- padding-top: 20px;  
+    position: fixed;
+    background-color: black;
+    color: white;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    text-align: right;
+    height: 50px;
+    padding-top: 20px;  
 }
 
 .footer-content {
@@ -90,7 +93,6 @@ footer {
     max-width: 1200px;
     margin: 0 auto;
 }
-
 
 .social-links a {
     margin: 0.5rem;
