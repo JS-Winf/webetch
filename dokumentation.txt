@@ -1,1 +1,157 @@
-*Insert Doku here
+
+
+Abgegeben von:	Hanna Kock-Rohwer, Johannes Matheo Schneider, Neele Zander
+
+E-Mail:	Hanna.kock-rohwer@std.dhsh.de; Johannes-matheo.schneider@std.dhsh.de; Neele.zander@std.dhsh.de
+
+Studiengruppe:	123 WINF
+	
+Gutachter:	Prof. Dr.-Ing. Sven Niemand
+
+	
+Abgabetermin:	20.06.2025
+
+
+
+
+
+Die Abgabe ist 	☒ ein erster Versuch
+
+	☐ ein Wiederholungsversuch
+
+ 
+Inhaltsverzeichnis
+1. Anfragen-Shop für einen Veranstaltungsservice	3
+2. Frontend	4
+3. Backend	5
+4. Datenbank-Anbindung	5
+5. Technischer Aufbau	5
+5.1 Verwendete Technologien	7
+
+
+
+
+1. Anfragen-Shop für einen Veranstaltungsservice
+Entwicklung einer Webseite im responsiven Design, als Anfragen Shop für einen Veranstaltungsservice. Die Webseite soll im Allgemeinen dazu dienen, dass es dem Unternehmen erleichtert wird Anfragen zu erhalten und seine Produkte dabei zu verwalten. Zusätzlich soll die Webseite dazu dienen, der Zielgruppe (Privatpersonen oder Unternehmende für Hochzeiten, Firmenfeiern, Feten, Geburtstage) einen geordneten Überblick über Produkte und Preise zu geben.
+Hierbei ist die Webseite unterteilt in 5 Seiten: Startseite, Produkte, Warenkorb, Login und Registrierung. Alle Seiten haben den gleichen Header und Footer, die sich auf das responsive Design für jeweils 5 verschiedene Devices anpassen lassen.
+Der Header besteht aus dem Firmen-Logo und Unternehmensnamen, sowie einer Navigationsleiste. Der Footer enthält das Jahr in dem zuletzt Änderungen der Webseite vorgenommen worden sind, dem Unternehmensnamen und zwei Verlinkungen zu den sozialen Medien - Instagram und Facebook.
+
+
+
+2. Ablauf, Installation und Anwendung
+Entwickelt wurde in einer Linux Ubuntu Umgebung in Visual Studio Code. Die Webseite bietet unter anderem Funktionen, wie einem Login oder der Registrierung, hinzufügen von Produkten in den Warenkorb mit Aktualisierung des Preises auf der Warenkorb-Seite und dem E-Mail-Versand der Anfrage an die Unternehmensmail.
+Installation: 
+1. Visual Studio Code öffnen
+2. In Linux Umgebung wechseln
+3. Über die Menüleiste auf Terminal  neues Terminal 
+4. Umgebung aktivieren
+	4.1 source (füge entwicklungsumgebungs Bezeichnung hier ein)/bin/activate
+ 	4.2 Python installieren: pip install python python3
+5. Projekt aus GitHub in Visual Studio Code einbinden mit 
+ 	5.1 git clone https://github.com/JS-Winf/webetch.git
+6. Requirements.txt installieren: pip install -r requirements.txt
+(installiert alle benötigten Komponenten, um das Projekt ausführen zu können)
+
+Anwendung:
+1. Unter /backend/main.py öffnen
+2. Über kleines Fenster unten rechts Button „Open in Browser“ anklicken
+3. Webseite öffnet sich im Browser
+
+
+
+3. Frontend
+Das Frontend der Webseite wurde mithilfe von HTML und CSS gestaltet, um die Struktur und das visuelle Erscheinungsbild benutzerfreundlichen umzusetzen. Für ein ansprechendes und geräteübergreifend optimiertes Layout kam zusätzlich das Framework Bootstrap zum Einsatz. Dieses unterstützt ein responsives Grid-System, sowie zahlreiche vordefinierte UI-Komponenten, wodurch die Webseite auf verschiedenen Bildschirmgrößen optimal dargestellt wird nach dem Mobile-First-Prinzip.
+Die Webseite enthält einen Header, der ein Logo, sowie den Unternehmensnamen darstellt und eine Navigationsleiste, die es ermöglicht zwischen den Seiten zu wechseln. 
+Besondere Aufmerksamkeit wurde auch auf Sicherheitsaspekte gelegt. So enthalten externe Links im Footer das Attribut rel=“noopener noreferrer“. Dieses sorgt dafür, dass beim Öffnen eines Links in einem neuen Tab die verlinkte Seite keinen Zugriff auf die „main.py“ hat und damit kein potenziell schädlicher Code auf die ursprüngliche Seite zurückwirken kann.
+Die Webseite besteht ausfolgenden Hauptseiten, die alle den Header und Footer durch die „base.html“ vermittelt bekommen:
+•	Index.html  Startseite: Übersicht und Einstiegspunkt zur Webseite
+•	Devices.html  Produktseite: Listet alle verfügbaren Produkte übersichtlich auf
+•	Device_detail.html  Produktdetails: weiterführende Infos zum ausgewählten Produkt
+•	Warenkorb.html  Warenkorb: Ausgewählte Produkte, Mengen mit gewählten Zeitraum
+•	Login.html  Login: ermöglicht registrierten Nutzenden die Anmeldung
+•	Register.html  Registrierung: Formular zur Erstellung eines neuen Benutzerkontos
+
+
+
+
+
+
+4. Backend
+Die zentralen Python-Module befinden sich im backend-Paket und umfassen „main.py“, „models.py“ und „email_utils.py“. 
+Modulübersicht:
+backend  ist das Basisverzeichnis und enthält die Kernlogik der Anwendung
+main.py  Hauptlogik, wie beispielweise: Abfrage, ob Benutzer eingeloggt ist, Liste aller Produkte, Produktdetailansicht, fügt Produkt dem Warenkorb hinzu, zeigt Warenkorb inkl. Mietdauer und berechnet automatisch die Miettage, schickt Anfrage per E-Mail ab und leert Warenkorb, Registrierung/Login, Passwort wird verschlüsselt in der relationalen Datenbank gespeichert, Logout, Verknüpfung Datenbank beim Starten der Webseite
+models.py  repräsentiert die zentralen Entitäten, wie Item für Produkte (id, name, description, category, display_online, image_url, is_variation_visible, price_per_day, quantity, tax_rate) oder User für Benutzerdaten (id, name, email, password)
+email_utils.py  zuständig für E-Mail bezogene Hilfsfunktionen, wie beispielweise den Versand von Anfragen
+
+5. Datenbank-Anbindung
+	5.1 Aufbau und Struktur
+Für die Webseite wurde eine relationale Datenbank mit dem Datenbankmanagementsystem MariaDB verwendet. Die Datenbank trägt den Namen „webtechnologien“ und besteht aus mehreren logisch voneinander getrennten Tabellen. Die Datenbank ist zusätzlich cloudbasiert und wird von AWS gehostet. Diese ist dauerhaft Online, öffentlich zugänglich und wird durch Benutzername und Passwort geschützt. Zugangsdaten hierfür liegen in der „main.py“ im Code. Folgende Tabellen sind hier zu nennen: „users“, „items“, „bookings“ und „booking_item“.
+	5.2 Tabellen
+Users  enthält alle Benutzerinformationen:
+•	id  eindeutige Benutzererkennung (Primärschlüssel)
+•	name  Benutzername
+•	email  E-Mail-Adresse des Users
+•	password  gespeichertes Passwort im verschlüsselten Format
+•	role  Benutzerrolle (guest or admin)
+•	created_at  Zeitpunkt der Erstellung des Kontos
+
+items  Anzeige, verfügbare Artikel zur Buchung
+•	id  eindeutige Artikel-ID (Primärschlüssel)
+•	name  Name Artikel
+•	category  zugehörige Kategorie
+•	description  Beschreibung (optional)
+•	price_per_day  Mietpreis pro Tag (Dezimalwert)
+•	quantity  Verfügbare Anzahl
+•	image_url Pfad zum Vorschaubild (optional)
+•	is_variation_visible  Sichtbarkeit von Varianten
+•	display_online  Online-Anzeigestatus
+•	tax_rate  Steuersatz in Prozent
+
+Zusätzliche Tabelle  Anzahl der verfügbaren Artikel, registrierte Nutzer, Anzahl Buchungen mit ausgewählten Artikeln
+Bookings  allgemeine Infos zur einzelnen Buchung
+•	id  Buchungs-ID (Primärschlüssel)
+•	user_id  Verweis auf buchenden Nutzer
+•	booking_date  Datum Buchung
+•	status  Status Buchung (offen, bestätigt, storniert)
+
+Booking_items  Positionen in Buchung
+•	id  ID der Buchungsposition (Primärschlüssel)
+•	booking_id  Fremdschlüssel zur Tabelle bookings
+•	item_id  Fremdschlüssel zur Tabelle items
+•	quantity  gebuchte Menge
+
+
+
+
+
+6. Technischer Aufbau
+6.1 Verwendete Technologien
+Die Webseite wurde mit folgenden Technologien gebaut:
+-	Frontend: HTML, CSS und Bootstrap
+-	Backend: Python Flask, diverse Python Module (siehe Imports im Code)
+-	Datenbank: MariaDB
+6.2 Verzeichnisstruktur/Dateiorganisation
+Unser Projekt ist klar strukturiert und folgt einem modularen Aufbau, der Frontend- und Backend-Komponenten sauber trennt. Die folgende Übersicht beschreibt die wichtigsten Verzeichnisse und Dateien innerhalb des backend-Ordners:
+Static:
+Dieses Verzeichnis enthält alles statistischen Ressourcen, die vom Frontend benötigt werden. Dazu zählen unter anderem die „style.css“-Datei, die für das Layout und Styling der Webseite dient, Bilddateien zur Darstellung vom Logo und Startseiten-Hintergrund und die Bootstrap-Einbindung des Download für das responsive Design.
+templates:
+Hier befinden sich alle HTML-Dateien, die das Grundgerüst der Webseite bilden. Die HTML-Dateien nutzen das Jinja2-Template-System von Flask, um dynamische Inhalte darzustellen. Dadurch ist die Einbettung in die Seite von Variablen, Schleifen und Bedingungen möglich.
+Hierzu zählen die: „base.html“, „index.html“, „devices.html“, „device_detail.html“, „warenkorb.html“, „login.html“ und „register.html“.
+Python-Dateien:
+Im Hauptverzeichnis des Backends befinden sich drei zentrale Python-Dateien:
+main.py  Benutzerfreundliche Navigation über Routen und Templates, stabile Datenhaltung via SQLALchemy, dynamisches Session-Management (Warenkorb;Login), sicher Benutzeranmeldung und Registrierung, E-Mail-Kommunikation zur Anfrageübermittlung.
+models.py  definiert die zwei zentralen Datenbankmodelle der Webanwendung mithilfe von SQLALchemy (objekt-relationalen Mapper für Flask). User-Modell repräsentiert registrierte Nutzer der Webseite. Es wird verwendet für Login, Registrierung und Sitzungsverwaltung. Das Item-Modell beschreibt die Geräte/Produkte, die auf der Webseite angezeigt und angefragt werden können. Durch SQLALchemy können Datenbankoperationen ohne manuelle SQL-Befehle durchgeführt werden – lesbar und sicherer.
+email_utils.py  Sobald ein Benutzer seine Anfrage über das Formular absendet, wird diese aufgerufen. Sie sorgt dafür, dass der Betreiber der Webseite automatisch eine strukturierte Übersicht aller angefragten Produkte per E-Mail erhält. Sie ermöglicht zudem automatisierte Kundenkommunikation, einfache Erweiterbarkeit und zentrale Wiederverwendbarkeit.
+
+6.3 Responsive Design
+Die Webseite verwendet ein responsives Grid-System zur optimalen Darstellung auf unterschiedlichen Bildgrößen. Dazu kommen fünf definierte Skalierungsstufen zum Einsatz, die auf dem gängigen Mobile-First-Prinzip basieren.
+col-12  Volle Breite (100%) auf extra kleinen Bildschirmen unter 576px
+col-sm-10  10 von 12 Spalten auf kleinen Bildschirmen, die größer/gleich 576px sind
+col-md-8  8 von 12 Spalten auf mittleren Bildschirmen, die größer/gleich 768px sind
+col-lg-6  6 von 12 Spalten auf großen Bildschirmen, die größer/gleich 992px sind
+col-xl-5  5 von 12 Spalten auf extra großen Bildschirmen, die größer/gleich 1200px sind
+Die Klassen stammen typischerweise aus dem Bootstrap-Framework und ermöglichen eine flexible, responsive Gestaltung.
+
+
+
