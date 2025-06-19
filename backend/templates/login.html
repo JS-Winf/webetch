@@ -1,22 +1,29 @@
-{% extends "base.html" %}
+{% extends "base.html" %}  {# Erbt das Grundlayout von 'base.html' #}
 
-{% block title %}Login{% endblock %}
+{% block title %}Login{% endblock %}  {# Setzt den Seitentitel auf "Login" #}
 
 {% block content %}
-<div class="container my-5">
-    <div class="row justify-content-center">
-        <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">
-            <h2 class="mb-4 text-center">Login</h2>
-            <form method="POST" class="bg-white p-4 shadow rounded">
+<div class="container my-5">  {# Container mit vertikalem Abstand oben und unten #}
+    <div class="row justify-content-center">  {# Zentriert die Spalte horizontal #}
+        <div class="col-12 col-sm-10 col-md-8 col-lg-6 col-xl-5">  
+            {# Responsive Spaltenbreite je nach Gerätegröße, ideal für Formulare #}
+            <h2 class="mb-4 text-center">Login</h2>  {# Überschrift für das Formular #}
+            <form method="POST" class="bg-white p-4 shadow rounded">  
+                {# Formular mit POST-Methode, weißem Hintergrund, Schatten und abgerundeten Ecken #}
                 <div class="mb-3">
-                    <label for="email" class="form-label">E-Mail-Adresse</label>
-                    <input type="email" class="form-control" id="email" name="email" required>
+                    <label for="email" class="form-label">E-Mail-Adresse</label>  
+                    {# Beschriftung für das E-Mail-Feld #}
+                    <input type="email" class="form-control" id="email" name="email" required>  
+                    {# Eingabefeld für die E-Mail, Pflichtfeld #}
                 </div>
                 <div class="mb-3">
-                    <label for="password" class="form-label">Passwort</label>
-                    <input type="password" class="form-control" id="password" name="password" required>
+                    <label for="password" class="form-label">Passwort</label>  
+                    {# Beschriftung für das Passwortfeld #}
+                    <input type="password" class="form-control" id="password" name="password" required>  
+                    {# Eingabefeld für das Passwort, Pflichtfeld #}
                 </div>
-                <button type="submit" class="btn btn-primary w-100">Einloggen</button>
+                <button type="submit" class="btn btn-primary w-100">Einloggen</button>  
+                {# Absende-Button für das Formular, nimmt die gesamte Breite ein #}
             </form>
         </div>
     </div>

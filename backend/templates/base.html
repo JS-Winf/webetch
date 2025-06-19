@@ -1,35 +1,37 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="de">  <!-- Setzt die Sprache des Dokuments auf Deutsch -->
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Eventverleih{% endblock %}</title>
+    <meta charset="UTF-8">  <!-- Zeichencodierung UTF-8 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">  <!-- Responsives Layout auf mobilen Geräten -->
+    <title>{% block title %}Eventverleih{% endblock %}</title>  <!-- Ermöglicht das Überschreiben des Seitentitels -->
 
-    <!-- Bootstrap CSS -->
+    <!-- Bootstrap CSS Einbindung -->
     <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap-5.3.6-dist/assets/css/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">  <!-- Eigene CSS-Datei -->
 </head>
 
-<body class="{% block body_class %}{% endblock %}">
+<body class="{% block body_class %}{% endblock %}">  <!-- Optionaler Block für zusätzliche Body-Klassen -->
 
-    <header class="bg-dark text-white py-3">
+    <header class="bg-dark text-white py-3">  <!-- Kopfbereich mit dunklem Hintergrund -->
         <div class="container-fluid">
             <div class="row align-items-center">
                 <div class="col-12 col-md-2 text-center text-md-start mb-2 mb-md-0">
                     <img src="{{ url_for('static', filename='images/Logo.jpg') }}" class="header-logo img-fluid" alt="Logo">
+                    <!-- Anzeige des Firmenlogos -->
                 </div>
                 <div class="col-12 col-md-6 text-center mb-2 mb-md-0">
-                    <h1 class="h4 mb-0">NiTo-Veranstaltungsservice</h1>
+                    <h1 class="h4 mb-0">NiTo-Veranstaltungsservice</h1>  <!-- Website-Name -->
                 </div>
                 <div class="col-12 col-md-4 text-center text-md-end">
                     <nav class="d-flex flex-wrap justify-content-center justify-content-md-end gap-2">
+                        <!-- Navigation mit Buttons -->
                         <a href="{{ url_for('index') }}" class="btn btn-outline-light btn-sm">Start</a>
                         <a href="{{ url_for('produkte') }}" class="btn btn-outline-light btn-sm">Produkte</a>
                         <a href="{{ url_for('warenkorb') }}" class="btn btn-outline-light btn-sm">Warenkorb</a>
                         {% if session.user %}
-                            <a href="{{ url_for('logout') }}" class="btn btn-outline-light btn-sm">Logout</a>
+                            <a href="{{ url_for('logout') }}" class="btn btn-outline-light btn-sm">Logout</a>  <!-- Zeigt Logout an, wenn Nutzer eingeloggt -->
                         {% else %}
-                            <a href="{{ url_for('login') }}" class="btn btn-outline-light btn-sm">Login</a>
+                            <a href="{{ url_for('login') }}" class="btn btn-outline-light btn-sm">Login</a>  <!-- Zeigt Login/Registrieren, wenn nicht eingeloggt -->
                             <a href="{{ url_for('register') }}" class="btn btn-outline-light btn-sm">Registrieren</a>
                         {% endif %}
                     </nav>
@@ -38,29 +40,30 @@
         </div>
     </header>
 
-    <main class="container my-5">
+    <main class="container my-5">  <!-- Hauptinhalt mit vertikalen Abständen -->
         {% with messages = get_flashed_messages() %}
             {% if messages %}
                 <div class="alert alert-info" role="alert">
                     {% for message in messages %}
-                        <p class="mb-0">{{ message }}</p>
+                        <p class="mb-0">{{ message }}</p>  <!-- Zeigt Flash-Nachrichten an (z. B. Fehlermeldungen, Bestätigungen) -->
                     {% endfor %}
                 </div>
             {% endif %}
         {% endwith %}
 
-        {% block content %}{% endblock %}
+        {% block content %}{% endblock %}  <!-- Platzhalter für seitenabhängigen Inhalt -->
     </main>
 
-    <!-- Bootstrap JS -->
+    <!-- Bootstrap JavaScript Bundle -->
     <script src="{{ url_for('static', filename='bootstrap-5.3.6-dist/assets/js/bootstrap.bundle.min.js') }}"></script>
 
-    <footer class="bg-dark text-white py-4 mt-5">
+    <footer class="bg-dark text-white py-4 mt-5">  <!-- Fußzeile mit Social Links -->
         <div class="container text-center">
             <p class="mb-2">© 2025 NiTo-Veranstaltungsservice</p>
             <div class="social-links d-flex justify-content-center gap-3">
                 <a href="https://www.facebook.com/NI.TO.Veranstaltungsservice/" target="_blank" rel="noopener noreferrer" class="text-white">Facebook</a>
                 <a href="https://www.instagram.com/nito_veranstaltungsservice?igsh=djNkMHBpcW85bnVj" target="_blank" rel="noopener noreferrer" class="text-white">Instagram</a>
+                <!-- Verlinkung zu Social Media Profilen -->
             </div>
         </div>
     </footer>

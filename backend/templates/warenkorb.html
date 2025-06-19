@@ -1,51 +1,56 @@
-{% extends "base.html" %}
+{% extends "base.html" %}  {# Erbt das Grundlayout von 'base.html' #}
 
-{% block title %}Warenkorb{% endblock %}
+{% block title %}Warenkorb{% endblock %}  {# Setzt den Seitentitel auf "Warenkorb" #}
 
 {% block content %}
-<div class="container my-5">
-    <h2 class="mb-4 text-center">Dein Warenkorb</h2>
+<div class="container my-5">  {# Container mit vertikalem Abstand oben und unten #}
+    <h2 class="mb-4 text-center">Dein Warenkorb</h2>  {# Überschrift für den Warenkorb-Bereich #}
 
     {% if items %}
-        <div class="table-responsive">
-            <table class="table table-bordered align-middle text-center">
-                <thead class="table-dark">
+        <div class="table-responsive">  {# Ermöglicht horizontales Scrollen bei kleineren Bildschirmen #}
+            <table class="table table-bordered align-middle text-center">  {# Tabelle mit Rahmen und zentriertem Text #}
+                <thead class="table-dark">  {# Tabellenkopf mit dunklem Hintergrund #}
                     <tr>
-                        <th>Produkt</th>
-                        <th>Zeitraum</th>
-                        <th>Preis/Tag</th>
-                        <th>Tage</th>
-                        <th>Gesamt</th>
+                        <th>Produkt</th>  {# Spalte für Produktname #}
+                        <th>Zeitraum</th>  {# Spalte für Mietzeitraum #}
+                        <th>Preis/Tag</th>  {# Spalte für Tagespreis #}
+                        <th>Tage</th>  {# Spalte für Anzahl der Tage #}
+                        <th>Gesamt</th>  {# Spalte für Gesamtpreis pro Produktposition #}
                     </tr>
                 </thead>
                 <tbody>
-                    {% set ns = namespace(total=0) %}
+                    {% set ns = namespace(total=0) %}  {# Namespace-Variable zur Berechnung der Gesamtsumme #}
                     {% for eintrag in items %}
-                        {% set tage = (eintrag.end_date - eintrag.start_date).days %}
-                        {% set zeilen_gesamt = tage * eintrag.item.price_per_day %}
-                        {% set ns.total = ns.total + zeilen_gesamt %}
+                        {% set tage = (eintrag.end_date - eintrag.start_date).days %}  
+                        {# Berechnet die Mietdauer in Tagen #}
+                        {% set zeilen_gesamt = tage * eintrag.item.price_per_day %}  
+                        {# Berechnet den Gesamtpreis für diese Position #}
+                        {% set ns.total = ns.total + zeilen_gesamt %}  
+                        {# Addiert zur Gesamtsumme #}
                         <tr>
-                            <td>{{ eintrag.item.name }}</td>
-                            <td>{{ eintrag.start_date.strftime('%d.%m.%Y') }} – {{ eintrag.end_date.strftime('%d.%m.%Y') }}</td>
-                            <td>{{ "%.2f"|format(eintrag.item.price_per_day) }} €</td>
-                            <td>{{ tage }}</td>
-                            <td><strong>{{ "%.2f"|format(zeilen_gesamt) }} €</strong></td>
+                            <td>{{ eintrag.item.name }}</td>  {# Produktname #}
+                            <td>{{ eintrag.start_date.strftime('%d.%m.%Y') }} – {{ eintrag.end_date.strftime('%d.%m.%Y') }}</td>  
+                            {# Formatiertes Start- und Enddatum #}
+                            <td>{{ "%.2f"|format(eintrag.item.price_per_day) }} €</td>  {# Preis pro Tag mit 2 Nachkommastellen #}
+                            <td>{{ tage }}</td>  {# Anzahl der Tage #}
+                            <td><strong>{{ "%.2f"|format(zeilen_gesamt) }} €</strong></td>  {# Gesamtpreis für die Position #}
                         </tr>
                     {% endfor %}
-                    <tr class="table-light">
+                    <tr class="table-light">  {# Zeile für die Gesamtsumme #}
                         <td colspan="4" class="text-end"><strong>Gesamtsumme:</strong></td>
-                        <td><strong>{{ "%.2f"|format(ns.total) }} €</strong></td>
+                        <td><strong>{{ "%.2f"|format(ns.total) }} €</strong></td>  {# Anzeige der berechneten Gesamtsumme #}
                     </tr>
                 </tbody>
             </table>
         </div>
 
         <form action="{{ url_for('anfrage_absenden') }}" method="post" class="text-end mt-3">
-            <button type="submit" class="btn btn-success">Jetzt anfragen</button>
+            <button type="submit" class="btn btn-success">Jetzt anfragen</button>  
+            {# Button zum Absenden der Anfrage – z. B. zur Angebotsanfrage oder Buchung #}
         </form>
     {% else %}
         <div class="alert alert-warning text-center" role="alert">
-            Dein Warenkorb ist leer.
+            Dein Warenkorb ist leer.  {# Hinweis bei leerem Warenkorb #}
         </div>
     {% endif %}
 </div>

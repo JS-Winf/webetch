@@ -8,44 +8,47 @@ from flask_mail import Mail, Message
 from datetime import datetime
 
 app = Flask(__name__)
-app.secret_key = os.urandom(24)
+app.secret_key = os.urandom(24)  # Geheimer Schlüssel für Session-Sicherheit
 
-# SQLAlchemy konfigurieren
+# SQLAlchemy Konfiguration
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://admin:Webtechnologien123_@webtechnologien-dhsh.ch5e7fok1mgo.eu-central-1.rds.amazonaws.com:3306/webtechnologien"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-db.init_app(app)
+db.init_app(app)  # Initialisiert die DB-Verbindung
 
 @app.route("/")
 def index():
-    user = session.get("user")
-    return render_template("index.html", user=user)
+    user = session.get("user")  # Holt eingeloggten Benutzer aus der Session
+    return render_template("index.html", user=user)  # Startseite
 
+# Produktübersicht
 @app.route("/produkte")
 def produkte():
-    items = Item.query.filter_by(display_online=True).all()
+    items = Item.query.filter_by(display_online=True).all()  # Nur sichtbare Produkte anzeigen
     return render_template("devices.html", items=items)
 
+# Detailansicht eines Produkts
 @app.route("/produkt/<int:item_id>")
 def produkt_detail(item_id):
-    item = Item.query.get_or_404(item_id)
+    item = Item.query.get_or_404(item_id)  # Holt das Produkt oder zeigt 404
     return render_template("device_detail.html", item=item)
 
+# Produkt zum Warenkorb hinzufügen
 @app.route("/add_to_cart/<int:item_id>", methods=["POST"])
 def add_to_cart(item_id):
     start_date = request.form.get("start_date")
     end_date = request.form.get("end_date")
 
     if "cart" not in session:
-        session["cart"] = []
+        session["cart"] = []  # Initialisiere Warenkorb, falls noch nicht vorhanden
 
     cart = session["cart"]
     cart.append({"item_id": item_id, "start_date": start_date, "end_date": end_date})
-    session["cart"] = cart
+    session["cart"] = cart  # Aktualisiere Session
 
-    flash("✅ Produkt wurde dem Warenkorb hinzugefügt.")
+    flash("✅ Produkt wurde dem Warenkorb hinzugefügt.")  # Benutzer-Feedback
     return redirect(url_for("warenkorb"))
 
-
+# Warenkorb anzeigen
 @app.route("/warenkorb")
 def warenkorb():
     cart = session.get("cart", [])
@@ -64,7 +67,7 @@ def warenkorb():
             })
     return render_template("warenkorb.html", items=items)
 
-
+# Login
 @app.route("/login", methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -85,7 +88,7 @@ def login():
             conn.close()
 
             if user and check_password_hash(user[1], password):
-                session["user"] = email
+                session["user"] = email  # Login erfolgreich, speichert E-Mail in Session
                 flash(f"✅ Willkommen zurück, {user[0]}!")
                 return redirect(url_for("index"))
             else:
@@ -98,6 +101,7 @@ def login():
 
     return render_template("login.html")
 
+# Registrierung
 @app.route("/register", methods=["GET", "POST"])
 def register():
     if request.method == "POST":
@@ -129,12 +133,14 @@ def register():
 
     return render_template("register.html")
 
+# Logout
 @app.route("/logout")
 def logout():
-    session.clear()
+    session.clear()  # Löscht alle Daten aus der Session
     flash("✅ Du wurdest erfolgreich ausgeloggt.")
     return redirect(url_for("index"))
 
+# Checkout-Route (nicht mehr aktiv genutzt, Ersatz: /anfrage-absenden)
 @app.route("/checkout")
 def checkout():
     items = session.get("cart", [])
@@ -142,24 +148,22 @@ def checkout():
         flash("Dein Warenkorb ist leer.")
         return redirect(url_for("produkte"))
 
-    # (Optional: hier später Anfrage-Mail oder DB-Speicherung ergänzen)
-
     flash("✅ Deine Anfrage wurde erfolgreich übermittelt!")
-    session["cart"] = []  # Warenkorb leeren
+    session["cart"] = []  # Leert den Warenkorb
     return redirect(url_for("index"))
 
-    
-# Mail-Konfiguration für GMX
+# Mail-Konfiguration (z. B. für GMX)
 app.config['MAIL_SERVER'] = 'mail.gmx.net'
 app.config['MAIL_PORT'] = 587
 app.config['MAIL_USE_TLS'] = True
 app.config['MAIL_USE_SSL'] = False
-app.config['MAIL_USERNAME'] = 'webtech1@gmx.de'       
-app.config['MAIL_PASSWORD'] = '2KIPBLCWVX3E4ABYBMP6'     
-app.config['MAIL_DEFAULT_SENDER'] = 'webtech1@gmx.de' 
+app.config['MAIL_USERNAME'] = 'webtech1@gmx.de'
+app.config['MAIL_PASSWORD'] = '2KIPBLCWVX3E4ABYBMP6'
+app.config['MAIL_DEFAULT_SENDER'] = 'webtech1@gmx.de'
 
-mail=Mail(app)
+mail = Mail(app)  # Initialisiere Flask-Mail mit der App
 
+# Anfrage per Mail versenden
 @app.route("/anfrage-absenden", methods=["POST"])
 def anfrage_absenden():
     cart = session.get("cart", [])
@@ -184,9 +188,9 @@ def anfrage_absenden():
                 "price": item.price_per_day
             })
 
-    # Mail senden
+    # E-Mail-Versand mit gerendertem Texttemplate
     try:
-        empfaenger = "deine.mail@adresse.de"  # Testweise deine eigene Mailadresse
+        empfaenger = "allmail@posteo.de"  # Zieladresse für Test/Support
         inhalt = render_template("email_template.txt", items=items)
         msg = Message("Neue Anfrage von der Website",
                       sender=app.config["MAIL_USERNAME"],
@@ -199,8 +203,7 @@ def anfrage_absenden():
 
     return redirect(url_for("index"))
 
-
-
+# Start der Anwendung + Test der Datenbankverbindung
 if __name__ == "__main__":
     try:
         conn = mariadb.connect(
@@ -219,4 +222,4 @@ if __name__ == "__main__":
         print(f"[Startup] Fehler bei der DB-Verbindung: {e}")
         sys.exit(1)
 
-    app.run(debug=True)
+    app.run(debug=True)  # Startet die Flask-App im Debug-Modus

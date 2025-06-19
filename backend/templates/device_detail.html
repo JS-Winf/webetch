@@ -1,40 +1,46 @@
-{% extends "base.html" %}
+{% extends "base.html" %}  {# Erbt das Grundlayout von 'base.html' #}
 
-{% block title %}Produktdetails{% endblock %}
+{% block title %}Produktdetails{% endblock %}  {# Setzt den Seitentitel auf "Produktdetails" #}
 
 {% block content %}
 <div class="container">
-    <h2 class="mb-4 text-center text-md-start">{{ item.name }}</h2>
+    <h2 class="mb-4 text-center text-md-start">{{ item.name }}</h2>  {# Überschrift mit dem Namen des Produkts #}
 
     <div class="row gy-4">
         <div class="col-12 col-md-6">
             {% if item.image_url %}
-                <img src="{{ item.image_url }}" class="img-fluid rounded w-100" alt="{{ item.name }}">
+                <img src="{{ item.image_url }}" class="img-fluid rounded w-100" alt="{{ item.name }}">  
+                {# Zeigt das Produktbild, falls eine Bild-URL vorhanden ist #}
             {% else %}
-                <img src="{{ url_for('static', filename='images/Image.jpeg') }}" class="img-fluid rounded w-100" alt="Beispielbild">
+                <img src="{{ url_for('static', filename='images/Image.jpeg') }}" class="img-fluid rounded w-100" alt="Beispielbild">  
+                {# Falls keine Bild-URL vorhanden ist, wird ein Standardbild angezeigt #}
             {% endif %}
         </div>
 
         <div class="col-12 col-md-6">
             <ul class="list-unstyled">
-                <li><strong>Kategorie:</strong> {{ item.category }}</li>
-                <li><strong>Beschreibung:</strong> {{ item.description }}</li>
-                <li><strong>Preis pro Tag:</strong> {{ item.price_per_day }} €</li>
-                <li><strong>Verfügbar:</strong> {{ item.quantity }} Stück</li>
+                <li><strong>Kategorie:</strong> {{ item.category }}</li>  {# Zeigt die Kategorie des Produkts an #}
+                <li><strong>Beschreibung:</strong> {{ item.description }}</li>  {# Zeigt die Beschreibung des Produkts an #}
+                <li><strong>Preis pro Tag:</strong> {{ item.price_per_day }} €</li>  {# Zeigt den Mietpreis pro Tag an #}
+                <li><strong>Verfügbar:</strong> {{ item.quantity }} Stück</li>  {# Zeigt die verfügbare Menge des Produkts an #}
             </ul>
 
             <form action="{{ url_for('add_to_cart', item_id=item.id) }}" method="post" class="mt-4">
+                {# Formular zum Hinzufügen des Artikels in den Warenkorb, mit Übergabe des Start- und Enddatums #}
                 <div class="row g-3">
                     <div class="col-12 col-sm-6">
                         <label for="start_date" class="form-label">Von</label>
                         <input type="date" id="start_date" name="start_date" class="form-control" required>
+                        {# Eingabefeld für das Startdatum der Miete #}
                     </div>
                     <div class="col-12 col-sm-6">
                         <label for="end_date" class="form-label">Bis</label>
                         <input type="date" id="end_date" name="end_date" class="form-control" required>
+                        {# Eingabefeld für das Enddatum der Miete #}
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary mt-4 w-100">In den Warenkorb</button>
+                {# Absende-Button zum Hinzufügen in den Warenkorb #}
             </form>
         </div>
     </div>
